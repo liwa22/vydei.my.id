@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="monetag" content="82d151422eebfd582a09baed1158ba5f">
-
+  
   <title>VIDEO.TWIMG - Premium Video Streaming</title>
 
 <script>(function(s){s.dataset.zone='10390631',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -73,7 +72,7 @@
       border-radius: 50%;
       width: 50px;
       height: 50px;
-      animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      animation: spin 1s linear infinite;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -100,13 +99,16 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
+  <!-- HEADER -->
   <header class="sticky top-0 z-50 px-6 py-4">
     <div class="max-w-7xl mx-auto flex justify-between items-center">
       <div class="flex items-center space-x-2">
         <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
           <i class="fas fa-play text-white text-xs"></i>
         </div>
-        <h1 class="text-xl font-bold tracking-tight uppercase">Stream<span class="text-blue-500">Enak</span></h1>
+        <h1 class="text-xl font-bold tracking-tight uppercase">
+          VIDEO<span class="text-blue-500">.TWIMG</span>
+        </h1>
       </div>
       <nav>
         <a href="https://videi.my.id/" class="btn-gradient text-white text-sm px-5 py-2.5 rounded-full font-semibold flex items-center">
@@ -116,11 +118,11 @@
     </div>
   </header>
 
+  <!-- MAIN -->
   <main class="flex-grow py-8 px-4 md:px-6">
     <div class="max-w-6xl mx-auto">
       <div id="video-container">
         <div class="loading-spinner" id="loading-spinner"></div>
-        <!-- poster dikosongkan agar memuat isi video -->
         <video 
           id="video-player" 
           controls 
@@ -128,7 +130,7 @@
           poster=""
           controlsList="nodownload noremoteplayback" 
           disablePictureInPicture>
-          Your browser does not support the video tag.
+          Browser Anda tidak mendukung video.
         </video>
       </div>
 
@@ -138,107 +140,70 @@
       </div>
 
       <section class="mt-8">
-        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+        <div class="flex flex-col md:flex-row gap-6">
           <div class="flex-1">
-            <h2 id="video-title" class="text-2xl md:text-3xl font-bold text-white mb-2 leading-tight">Memuat Judul...</h2>
-            
-            <div class="flex flex-wrap items-center gap-4 text-sm text-zinc-400 mb-6">
-              <div class="flex items-center bg-zinc-800 px-3 py-1 rounded-full">
-                <i class="fas fa-star text-yellow-500 mr-1.5 text-xs"></i>
-                <span class="font-semibold text-zinc-200">5.5</span>
-              </div>
-              <span class="flex items-center"><i class="far fa-eye mr-1.5"></i> 1.2M Views</span>
-              <span class="flex items-center"><i class="far fa-calendar-alt mr-1.5"></i> 2026</span>
-            </div>
-
-            <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl">
-              <h3 class="text-sm font-semibold text-zinc-300 mb-2 uppercase tracking-wider">Deskripsi</h3>
-              <p id="video-description" class="text-zinc-400 leading-relaxed">
-                Memuat deskripsi video...
-              </p>
-            </div>
+            <h2 id="video-title" class="text-2xl md:text-3xl font-bold mb-2">Memuat Judul...</h2>
+            <p id="video-description" class="text-zinc-400">
+              Memuat deskripsi video...
+            </p>
           </div>
 
-          <div class="flex flex-col gap-3 min-w-[200px]">
-            <button id="share-button" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-semibold py-3 px-6 rounded-xl transition-all flex items-center justify-center border border-zinc-700">
-              <i class="fas fa-share-nodes mr-2"></i> Bagikan
+          <div class="min-w-[200px]">
+            <button id="share-button" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white py-3 px-6 rounded-xl">
+              <i class="fas fa-share-nodes mr-2"></i> Salin Link
             </button>
-            <div class="p-4 bg-blue-600/10 border border-blue-500/20 rounded-xl">
-              <p class="text-xs text-blue-400 text-center font-medium">Kualitas: HD 1080p</p>
-            </div>
           </div>
         </div>
       </section>
     </div>
   </main>
 
-  <footer class="border-t border-zinc-900 py-8 px-6 mt-12 text-center">
-    <p class="text-zinc-500 text-sm">&copy; 2026 <span class="text-zinc-300 font-semibold">VIDEO.TWIMG</span>. All rights reserved.</p>
+  <!-- FOOTER -->
+  <footer class="border-t border-zinc-900 py-8 px-6 text-center">
+    <p class="text-zinc-500 text-sm">
+      © 2026 <span class="text-zinc-300 font-semibold">VIDEO.TWIMG</span>. All rights reserved.
+    </p>
   </footer>
 
+  <!-- SCRIPT -->
   <script>
+    const videoPlayer = document.getElementById('video-player');
+
     document.addEventListener('DOMContentLoaded', async () => {
-      let urlPath = window.location.pathname;
-      let videoId = '';
+      let videoId = location.pathname.replace('/', '');
 
-      if (urlPath.startsWith('/')) { urlPath = urlPath.substring(1); }
-      if (urlPath.startsWith('e/')) { videoId = urlPath.substring(2); } else { videoId = urlPath; }
-
-      const videoPlayer = document.getElementById('video-player');
-      const videoTitle = document.getElementById('video-title');
-      const videoDescription = document.getElementById('video-description');
-      const loadingSpinner = document.getElementById('loading-spinner');
-      const errorMessage = document.getElementById('error-message');
+      const titleEl = document.getElementById('video-title');
+      const descEl = document.getElementById('video-description');
+      const spinner = document.getElementById('loading-spinner');
+      const errorBox = document.getElementById('error-message');
       const errorText = document.getElementById('error-text');
-      const shareButton = document.getElementById('share-button');
+      const shareBtn = document.getElementById('share-button');
 
-      if (!videoId) {
-        errorText.textContent = 'ID video tidak ditemukan.';
-        errorMessage.classList.remove('hidden');
-        return;
-      }
-
-      loadingSpinner.style.display = 'block';
+      spinner.style.display = 'block';
 
       try {
-        const response = await axios.get('https://raw.githubusercontent.com/liwa22/json/refs/heads/main/Video.json', { timeout: 10000 });
-        const videos = response.data;
-        const foundVideo = videos.find(video => video.id === videoId);
+        const res = await axios.get('https://raw.githubusercontent.com/liwa22/json/refs/heads/main/Video.json');
+        const data = res.data.find(v => v.id === videoId);
 
-        if (foundVideo) {
-          // TRIK UTAMA: Tambahkan #t=1 di akhir URL video
-          // Ini memerintahkan browser untuk mengambil frame pada detik ke-1 sebagai preview
-          const videoUrl = foundVideo.Url;
-          videoPlayer.src = videoUrl + "#t=1.0"; 
-          
-          videoTitle.textContent = foundVideo.Judul || 'Untitled Video';
-          videoDescription.textContent = foundVideo.Description || 'Tidak ada deskripsi.';
+        if (!data) throw 'Video tidak ditemukan';
 
-          // Pastikan video dimuat agar frame pertama muncul
-          videoPlayer.load();
+        videoPlayer.src = data.Url + '#t=1';
+        titleEl.textContent = data.Judul || 'Untitled';
+        descEl.textContent = data.Description || '-';
+        videoPlayer.load();
 
-        } else {
-          errorText.textContent = `Video ID ${videoId} tidak ditemukan.`;
-          errorMessage.classList.remove('hidden');
-        }
-      } catch (error) {
-        errorText.textContent = 'Gagal memuat data video.';
-        errorMessage.classList.remove('hidden');
+      } catch (e) {
+        errorText.textContent = e;
+        errorBox.classList.remove('hidden');
       } finally {
-        loadingSpinner.style.display = 'none';
+        spinner.style.display = 'none';
       }
 
-      shareButton.addEventListener('click', async () => {
-        const currentUrl = window.location.href;
-        try {
-          await navigator.clipboard.writeText(currentUrl);
-          const originalText = shareButton.innerHTML;
-          shareButton.innerHTML = '<i class="fas fa-check mr-2 text-green-500"></i> Disalin!';
-          setTimeout(() => { shareButton.innerHTML = originalText; }, 2000);
-        } catch {
-          alert('Link: ' + currentUrl);
-        }
-      });
+      shareBtn.onclick = async () => {
+        await navigator.clipboard.writeText(location.href);
+        shareBtn.innerHTML = '✔ Disalin';
+        setTimeout(() => shareBtn.innerHTML = 'Salin Link', 1500);
+      };
     });
 
     videoPlayer.addEventListener('contextmenu', e => e.preventDefault());
